@@ -5,8 +5,10 @@ import { useSession } from 'next-auth/react';
 
 export default function TripForm() {
   const [destination, setDestination] = useState('');
-  const [date, setDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [category, setCategory] = useState('');
+  const [continent, setContinent] = useState('');
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [comments, setComments] = useState('');
@@ -22,8 +24,13 @@ export default function TripForm() {
     setLoading(true);
 
     try {      
-      if (!destination || !date) {
-        throw new Error('Wszystkie pola są wymagane');
+      if (!destination || !startDate || !endDate) {
+        throw new Error('Wszystkie wymagane pola muszą być wypełnione');
+      }
+
+      // Sprawdź, czy data końcowa jest po dacie początkowej
+      if (new Date(endDate) <= new Date(startDate)) {
+        throw new Error('Data zakończenia podróży musi być późniejsza niż data rozpoczęcia');
       }
 
       // Check if the user is authenticated
@@ -37,8 +44,10 @@ export default function TripForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           destination, 
-          date, 
+          date: startDate, // Zachowujemy kompatybilność z obecnym API
+          endDate,
           category: category || undefined, 
+          continent: continent || undefined,
           adults, 
           children, 
           comments: comments || undefined 
@@ -53,7 +62,9 @@ export default function TripForm() {
       
       setSuccess(true);
       setDestination('');
-      setDate('');
+      setStartDate('');
+      setEndDate('');
+      setContinent('');
       setTimeout(() => {
         router.push('/dashboard');
       }, 2000);
@@ -83,18 +94,56 @@ export default function TripForm() {
         />
       </div>
       
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="label">
+            <span className="label-text">Data rozpoczęcia</span>
+          </label>
+          <input 
+            className="input input-bordered w-full" 
+            type="date" 
+            value={startDate} 
+            onChange={e => setStartDate(e.target.value)} 
+            required 
+            disabled={loading}
+          />
+        </div>
+        
+        <div>
+          <label className="label">
+            <span className="label-text">Data zakończenia</span>
+          </label>
+          <input 
+            className="input input-bordered w-full" 
+            type="date"
+            value={endDate}
+            onChange={e => setEndDate(e.target.value)}
+            required
+            disabled={loading}
+            min={startDate || undefined}
+          />
+        </div>
+      </div>
+      
       <div>
         <label className="label">
-          <span className="label-text">Data wyjazdu</span>
+          <span className="label-text">Kontynent</span>
         </label>
-        <input 
-          className="input input-bordered w-full" 
-          type="date" 
-          value={date} 
-          onChange={e => setDate(e.target.value)} 
-          required 
+        <select 
+          className="select select-bordered w-full"
+          value={continent}
+          onChange={e => setContinent(e.target.value)}
           disabled={loading}
-        />
+        >
+          <option value="">-- Wybierz kontynent --</option>
+          <option value="europa">Europa</option>
+          <option value="azja">Azja</option>
+          <option value="afryka">Afryka</option>
+          <option value="ameryka-pn">Ameryka Północna</option>
+          <option value="ameryka-pd">Ameryka Południowa</option>
+          <option value="australia">Australia i Oceania</option>
+          <option value="antarktyda">Antarktyda</option>
+        </select>
       </div>
       
       <div>

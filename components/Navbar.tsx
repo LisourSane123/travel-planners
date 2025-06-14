@@ -13,89 +13,101 @@ export default function Navbar() {
   };
   
   return (
-    <div className="sticky top-0 z-30 shadow-sm bg-white">
-      <div className="navbar container mx-auto px-4">
-        <div className="navbar-start">
-          <div className="dropdown md:hidden">
-            <div tabIndex={0} role="button" className="btn btn-ghost">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
-            </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><Link href="/about" className={pathname === '/about' ? 'font-bold' : ''}>O nas</Link></li>
-              <li><Link href="/dashboard" className={pathname === '/dashboard' ? 'font-bold' : ''}>Panel</Link></li>
-              <li><Link href="/reports" className={pathname === '/reports' ? 'font-bold' : ''}>Raporty</Link></li>
-              <li><Link href="/contact" className={pathname === '/contact' ? 'font-bold' : ''}>Kontakt</Link></li>
-            </ul>
+    <div className="sticky top-0 z-30 shadow bg-white">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center gap-2">
+              <Image 
+                src="/images/logo.svg" 
+                alt="Travel Planners Logo" 
+                width={40} 
+                height={40}
+                className="h-10 w-auto"
+                priority
+              />
+              <span className="font-bold text-xl hidden sm:inline">Travel Planners</span>
+            </Link>
           </div>
-          <Link href="/" className="flex items-center gap-2">
-            <Image 
-              src="/images/logo.png" 
-              alt="Travel Planners Logo" 
-              width={40} 
-              height={40} 
-              className="h-10 w-auto"
-              priority
-            />
-            <span className="font-bold text-xl hidden sm:inline">Travel Planners</span>
-          </Link>
-        </div>
-        <div className="navbar-center hidden md:flex">
-          <ul className="menu menu-horizontal px-1 gap-2">
-            <li>
-              <Link 
-                href="/about" 
-                className={`rounded-lg font-medium hover:bg-base-200 ${pathname === '/about' ? 'bg-base-200 font-bold' : ''}`}
-              >
-                O nas
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/dashboard" 
-                className={`rounded-lg font-medium hover:bg-base-200 ${pathname === '/dashboard' ? 'bg-base-200 font-bold' : ''}`}
-              >
-                Panel
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/reports" 
-                className={`rounded-lg font-medium hover:bg-base-200 ${pathname === '/reports' ? 'bg-base-200 font-bold' : ''}`}
-              >
-                Raporty
-              </Link>
-            </li>
-            <li>
-              <Link 
-                href="/contact" 
-                className={`rounded-lg font-medium hover:bg-base-200 ${pathname === '/contact' ? 'bg-base-200 font-bold' : ''}`}
-              >
-                Kontakt
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="navbar-end">
-          {!session ? (
-            <Link href="/auth" className="btn btn-primary">Zaloguj się</Link>
-          ) : (
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar placeholder">
-                <div className="bg-primary text-white rounded-full w-10">
-                  <span>{(session.user?.name || session.user?.email || '?')[0].toUpperCase()}</span>
-                </div>
+          
+          {/* Menu główne - w tej samej linii co logo */}
+          <div className="hidden md:flex items-center space-x-1">
+            <Link 
+              href="/"
+              className={`px-3 py-2 rounded-md text-sm font-medium hover:text-primary hover:bg-gray-50 ${pathname === '/' ? 'text-primary font-semibold' : 'text-gray-700'}`}
+            >
+              Home
+            </Link>
+            <Link 
+              href="/dashboard"
+              className={`px-3 py-2 rounded-md text-sm font-medium hover:text-primary hover:bg-gray-50 ${pathname === '/dashboard' ? 'text-primary font-semibold' : 'text-gray-700'}`}
+            >
+              Podróże
+            </Link>
+            <Link 
+              href="/about"
+              className={`px-3 py-2 rounded-md text-sm font-medium hover:text-primary hover:bg-gray-50 ${pathname === '/about' ? 'text-primary font-semibold' : 'text-gray-700'}`}
+            >
+              O nas
+            </Link>
+            <Link 
+              href="/contact"
+              className={`px-3 py-2 rounded-md text-sm font-medium hover:text-primary hover:bg-gray-50 ${pathname === '/contact' ? 'text-primary font-semibold' : 'text-gray-700'}`}
+            >
+              Kontakt
+            </Link>
+          </div>
+          
+          {/* Menu użytkownika lub przycisk logowania */}
+          <div className="flex items-center">
+            {!session ? (
+              <Link href="/auth" className="btn btn-primary btn-sm">Zaloguj się</Link>
+            ) : (
+              <div className="dropdown dropdown-end dropdown-hover">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar placeholder">
+                  <div className="bg-primary text-white rounded-full w-10">
+                    <span>{(session.user?.name || session.user?.email || '?')[0].toUpperCase()}</span>
+                  </div>
+                </label>
+                <ul tabIndex={0} className="dropdown-content menu menu-sm p-2 shadow bg-base-100 rounded-box w-64 mt-2">
+                  <li className="p-2 text-sm opacity-75 border-b">{session.user?.email}</li>
+                  <li><Link href="/dashboard">Mój panel</Link></li>
+                  <li><Link href="/create-trip">Nowa podróż</Link></li>
+                  <li><Link href="/reports">Statystyki i raporty</Link></li>
+                  <li><button onClick={handleLogout} className="text-error">Wyloguj się</button></li>
+                </ul>
               </div>
-              <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-64">
-                <li className="p-2 text-sm opacity-75 border-b">{session.user?.email}</li>
-                <li><Link href="/dashboard">Mój panel</Link></li>
-                <li><Link href="/create-trip">Nowa podróż</Link></li>
-                <li><Link href="/reports">Statystyki i raporty</Link></li>
-                <li><button onClick={handleLogout} className="text-error">Wyloguj się</button></li>
-              </ul>
+            )}
+            
+            {/* Menu mobilne - hamburger */}
+            <div className="md:hidden ml-2">
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+                  </svg>
+                </label>
+                <ul tabIndex={0} className="dropdown-content menu menu-sm p-2 shadow bg-base-100 rounded-box w-52 mt-2">
+                  <li><Link href="/">Home</Link></li>
+                  <li><Link href="/dashboard">Podróże</Link></li>
+                  <li><Link href="/about">O nas</Link></li>
+                  <li><Link href="/contact">Kontakt</Link></li>
+                  {!session && <li><Link href="/auth">Zaloguj się</Link></li>}
+                  {session && (
+                    <>
+                      <li className="menu-title">
+                        <span>{session.user?.email}</span>
+                      </li>
+                      <li><Link href="/create-trip">Nowa podróż</Link></li>
+                      <li><Link href="/reports">Statystyki i raporty</Link></li>
+                      <li><button onClick={handleLogout}>Wyloguj się</button></li>
+                    </>
+                  )}
+                </ul>
+              </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Tło -->
+  <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#3b82f6" stroke-width="4"/>
+  
+  <!-- Glob ziemski -->
+  <circle cx="50" cy="50" r="30" fill="#3b82f6"/>
+  
+  <!-- Kontynenty -->
+  <path d="M40,30 C45,25 55,32 60,28 C65,24 68,35 60,40 C52,45 48,38 40,45 C32,52 35,60 45,58 C55,56 65,65 55,70 C45,75 30,65 35,55 C40,45 35,35 40,30Z" fill="#ffffff"/>
+  
+  <!-- Samolot -->
+  <path d="M75,30 L90,20 L85,35 L70,40 L75,30Z" fill="#3b82f6" stroke="#ffffff" stroke-width="1"/>
+  <path d="M68,42 L75,37 L72,45 L68,42Z" fill="#3b82f6" stroke="#ffffff" stroke-width="1"/>
+  
+  <!-- Równoleżniki -->
+  <ellipse cx="50" cy="50" rx="30" ry="10" stroke="#ffffff" stroke-width="1" fill="none"/>
+  <ellipse cx="50" cy="50" rx="30" ry="20" stroke="#ffffff" stroke-width="1" fill="none" stroke-dasharray="2 2"/>
+  
+  <!-- Południki -->
+  <path d="M50,20 C60,30 60,70 50,80" stroke="#ffffff" stroke-width="1" fill="none"/>
+  <path d="M50,20 C40,30 40,70 50,80" stroke="#ffffff" stroke-width="1" fill="none"/>
+</svg>

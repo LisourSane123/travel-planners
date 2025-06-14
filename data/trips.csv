@@ -1,4 +1,5 @@
-id,user_id,destination,date,status,created_at,category,adults,children,comments
-1,1,Warszawa,2025-08-15,nowa,2025-06-10T10:00:00.000Z,city-break,2,0,Zwiedzanie zabytków i muzeów
-2,2,Kraków,2025-09-20,w trakcie,2025-06-11T15:30:00.000Z,historia,2,1,Wizyta na Wawelu i w Sukiennicach
-e2d7c13d-1c7b-4354-bbf6-8e67216030b8,1a26252d-e3eb-424a-ae2d-a3d91766b16f,Zabawa w Nigerii,2025-06-14,nowa,2025-06-14T13:59:22.112Z,relaks,2,2000,
+id,user_id,destination,date,endDate,status,created_at,category,continent,adults,children,comments
+1,1,Warszawa,2025-08-15,,nowa,2025-06-10T10:00:00.000Z,city-break,,2,0,Zwiedzanie zabytków i muzeów
+2,2,Kraków,2025-09-20,,w trakcie,2025-06-11T15:30:00.000Z,historia,,2,1,Wizyta na Wawelu i w Sukiennicach
+e2d7c13d-1c7b-4354-bbf6-8e67216030b8,1a26252d-e3eb-424a-ae2d-a3d91766b16f,Zabawa w Nigerii,2025-06-14,,nowa,2025-06-14T13:59:22.112Z,relaks,,2,2000,
+4e4be5b0-0aa7-4412-a9dc-d345be79609b,1a26252d-e3eb-424a-ae2d-a3d91766b16f,Sheh,2025-06-11,2025-06-24,nowa,2025-06-14T14:33:46.593Z,relaks,antarktyda,2,0,

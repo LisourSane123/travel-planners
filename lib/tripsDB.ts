@@ -8,9 +8,11 @@ export type Trip = {
   user_id: string;
   destination: string;
   date: string;
+  endDate?: string;
   status: 'nowa' | 'w trakcie' | 'zakończona';
   created_at: string;
   category?: 'egzotyka' | 'historia' | 'city-break' | 'natura' | 'relaks' | 'sport' | 'kulinarna' | 'inne';
+  continent?: 'europa' | 'azja' | 'afryka' | 'ameryka-pn' | 'ameryka-pd' | 'australia' | 'antarktyda';
   adults?: number;
   children?: number;
   comments?: string;
@@ -27,7 +29,7 @@ function ensureTripFileExists() {
   }
 
   if (!fs.existsSync(tripsFilePath)) {
-    fs.writeFileSync(tripsFilePath, 'id,user_id,destination,date,status,created_at,category,adults,children,comments\n');
+    fs.writeFileSync(tripsFilePath, 'id,user_id,destination,date,endDate,status,created_at,category,continent,adults,children,comments\n');
   }
 }
 
@@ -48,7 +50,7 @@ function parseTripsCSV(csvContent: string): Trip[] {
 
 // Convert trips to CSV string
 function tripsToCSV(trips: Trip[]): string {
-  const headers = ['id', 'user_id', 'destination', 'date', 'status', 'created_at', 'category', 'adults', 'children', 'comments'];
+  const headers = ['id', 'user_id', 'destination', 'date', 'endDate', 'status', 'created_at', 'category', 'continent', 'adults', 'children', 'comments'];
   const headerLine = headers.join(',');
   const rows = trips.map(trip => 
     headers.map(header => {
@@ -82,8 +84,10 @@ export function getUserTrips(userId: string): Trip[] {
 export function createTrip(
   userId: string, 
   destination: string, 
-  date: string, 
+  date: string,
+  endDate?: string,
   category?: string, 
+  continent?: string,
   adults?: number, 
   children?: number, 
   comments?: string
@@ -96,9 +100,11 @@ export function createTrip(
       user_id: userId,
       destination,
       date,
+      endDate,
       status: 'nowa',
       created_at: new Date().toISOString(),
       category: category as Trip['category'],
+      continent: continent as Trip['continent'],
       adults,
       children,
       comments

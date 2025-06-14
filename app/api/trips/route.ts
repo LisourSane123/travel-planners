@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { destination, date, category, adults, children, comments } = body;
+    const { destination, date, endDate, category, continent, adults, children, comments } = body;
 
     if (!destination || !date) {
       return NextResponse.json(
@@ -30,8 +30,10 @@ export async function POST(req: NextRequest) {
     const newTrip = createTrip(
       userId, 
       destination, 
-      date, 
+      date,
+      endDate, 
       category, 
+      continent,
       adults !== undefined ? Number(adults) : undefined,
       children !== undefined ? Number(children) : undefined,
       comments
