@@ -64,13 +64,13 @@ export default function Navbar() {
             {!session ? (
               <Link href="/auth" className="btn btn-primary btn-sm">Zaloguj się</Link>
             ) : (
-              <div className="dropdown dropdown-end dropdown-hover">
-                <label tabIndex={0} className="btn btn-ghost btn-circle avatar placeholder">
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar placeholder cursor-pointer">
                   <div className="bg-primary text-white rounded-full w-10">
                     <span>{(session.user?.name || session.user?.email || '?')[0].toUpperCase()}</span>
                   </div>
                 </label>
-                <ul tabIndex={0} className="dropdown-content menu menu-sm p-2 shadow bg-base-100 rounded-box w-64 mt-2">
+                <ul tabIndex={0} className="dropdown-content z-[1] menu menu-sm p-2 shadow bg-base-100 rounded-box w-64 mt-2">
                   <li className="p-2 text-sm opacity-75 border-b">{session.user?.email}</li>
                   <li><Link href="/dashboard">Mój panel</Link></li>
                   <li><Link href="/create-trip">Nowa podróż</Link></li>
