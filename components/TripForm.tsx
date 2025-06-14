@@ -1,0 +1,174 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+
+export default function TripForm() {
+  const [destination, setDestination] = useState('');
+  const [date, setDate] = useState('');
+  const [category, setCategory] = useState('');
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [comments, setComments] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {      
+      if (!destination || !date) {
+        throw new Error('Wszystkie pola są wymagane');
+      }
+
+      // Check if the user is authenticated
+      if (!session?.user) {
+        throw new Error('Musisz być zalogowany aby zgłosić podróż');
+      }
+
+      // Zapisz podróż w bazie CSV za pomocą API
+      const response = await fetch('/api/trips', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          destination, 
+          date, 
+          category: category || undefined, 
+          adults, 
+          children, 
+          comments: comments || undefined 
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Wystąpił błąd podczas zapisywania podróży');
+      }
+      
+      setSuccess(true);
+      setDestination('');
+      setDate('');
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 2000);
+    } catch (err: any) {
+      console.error('Błąd:', err);
+      setError(err?.message || 'Wystąpił błąd podczas zapisywania podróży');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="card bg-base-200 p-8 max-w-2xl mx-auto mt-8 space-y-4">
+      <h2 className="text-xl">Zgłoś podróż</h2>
+      
+      <div>
+        <label className="label">
+          <span className="label-text">Cel podróży</span>
+        </label>
+        <input 
+          className="input input-bordered w-full" 
+          placeholder="Cel podróży" 
+          value={destination} 
+          onChange={e => setDestination(e.target.value)} 
+          required 
+          disabled={loading}
+        />
+      </div>
+      
+      <div>
+        <label className="label">
+          <span className="label-text">Data wyjazdu</span>
+        </label>
+        <input 
+          className="input input-bordered w-full" 
+          type="date" 
+          value={date} 
+          onChange={e => setDate(e.target.value)} 
+          required 
+          disabled={loading}
+        />
+      </div>
+      
+      <div>
+        <label className="label">
+          <span className="label-text">Rodzaj wycieczki</span>
+        </label>
+        <select 
+          className="select select-bordered w-full"
+          value={category}
+          onChange={e => setCategory(e.target.value)}
+          disabled={loading}
+        >
+          <option value="">-- Wybierz rodzaj --</option>
+          <option value="egzotyka">Egzotyka</option>
+          <option value="historia">Historia</option>
+          <option value="city-break">City Break</option>
+          <option value="natura">Wycieczka z naturą</option>
+          <option value="relaks">Wypoczynek/Relaks</option>
+          <option value="sport">Sport i aktywność</option>
+          <option value="kulinarna">Kulinarna</option>
+          <option value="inne">Inne</option>
+        </select>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="label">
+            <span className="label-text">Liczba dorosłych</span>
+          </label>
+          <input 
+            className="input input-bordered w-full" 
+            type="number"
+            min="1"
+            value={adults} 
+            onChange={e => setAdults(parseInt(e.target.value) || 0)} 
+            disabled={loading}
+          />
+        </div>
+        
+        <div>
+          <label className="label">
+            <span className="label-text">Liczba dzieci</span>
+          </label>
+          <input 
+            className="input input-bordered w-full" 
+            type="number"
+            min="0"
+            value={children} 
+            onChange={e => setChildren(parseInt(e.target.value) || 0)} 
+            disabled={loading}
+          />
+        </div>
+      </div>
+      
+      <div>
+        <label className="label">
+          <span className="label-text">Dodatkowe uwagi</span>
+        </label>
+        <textarea 
+          className="textarea textarea-bordered w-full" 
+          rows={3}
+          placeholder="Uwagi, specjalne wymagania, etc." 
+          value={comments} 
+          onChange={e => setComments(e.target.value)} 
+          disabled={loading}
+        />
+      </div>
+      
+      <button className="btn btn-primary w-full mt-4" type="submit" disabled={loading}>
+        {loading ? 'Wysyłanie...' : 'Wyślij zgłoszenie'}
+      </button>
+      
+      {success && <div className="alert alert-success">Podróż zgłoszona! Za chwilę zostaniesz przekierowany.</div>}
+      {error && <div className="alert alert-error">{error}</div>}
+    </form>
+  );
+}

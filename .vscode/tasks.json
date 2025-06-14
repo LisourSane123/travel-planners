@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev",
+      "type": "shell",
+      "command": "pnpm dev",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "pnpm build",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "seed",
+      "type": "shell",
+      "command": "npx ts-node prisma/seed.ts",
+      "group": "test",
+      "problemMatcher": []
+    }
+  ]
+}

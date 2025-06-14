@@ -1,0 +1,4 @@
+id,email,password,name,createdAt
+1,admin@example.com,admin123,Administrator,2025-06-10T10:00:00.000Z
+2,user@example.com,user123,Regular User,2025-06-12T14:30:00.000Z
+1a26252d-e3eb-424a-ae2d-a3d91766b16f,twst@wp.pl,123456,,2025-06-14T13:02:17.708Z
