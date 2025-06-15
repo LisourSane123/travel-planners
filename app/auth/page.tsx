@@ -12,6 +12,15 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  
+  // Sprawdź, czy jest parametr destination w URL
+  const getDestination = () => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('destination');
+    }
+    return null;
+  };
 
   async function handleAuth(e: React.FormEvent) {
     e.preventDefault();
@@ -40,7 +49,12 @@ export default function AuthPage() {
         }
 
         // Przekierowanie po udanym logowaniu
-        router.push('/dashboard');
+        const destination = getDestination();
+        if (destination) {
+          router.push(`/${destination}`);
+        } else {
+          router.push('/dashboard');
+        }
         router.refresh();
       } else {
         // Rejestracja
@@ -72,8 +86,13 @@ export default function AuthPage() {
             setSuccess(false);
           }, 3000);
         } else {
-          // Redirect new users to welcome page
-          router.push('/welcome');
+          // Redirect new users to welcome page or destination if provided
+          const destination = getDestination();
+          if (destination) {
+            router.push(`/${destination}`);
+          } else {
+            router.push('/welcome');
+          }
           router.refresh();
         }
       }

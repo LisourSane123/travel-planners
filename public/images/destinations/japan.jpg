@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#ffffff"/>
+  <circle cx="400" cy="200" r="120" fill="#bc002d"/>
+  <text x="400" y="320" font-family="Arial, sans-serif" font-size="48" text-anchor="middle" fill="#000" font-weight="bold">JAPONIA</text>
+  <text x="400" y="370" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#000">Tokio • Kioto • Góra Fuji</text>
+</svg>

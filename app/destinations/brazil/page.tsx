@@ -1,0 +1,138 @@
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import Navbar from '../../../components/Navbar';
+
+// Metadata przeniesiona do pliku metadata.ts w tym samym folderze lub layout.tsx
+
+export default function BrazilPage() {
+  return (
+    <>
+      <Navbar />
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          {/* Nagłówek */}
+        <h1 className="text-4xl font-bold mb-2">Brazylia</h1>
+        <p className="text-lg text-gray-600 mb-8">Kraj energii, przyrody i niezapomnianych widoków</p>
+        
+        {/* Główne zdjęcie */}
+        <div className="relative h-96 w-full rounded-xl overflow-hidden mb-10 shadow-xl">
+          <Image 
+            src="/images/destinations/brazil.jpg" 
+            alt="Rio de Janeiro - Brazylia" 
+            fill 
+            className="object-cover" 
+            priority 
+          />
+        </div>
+        
+        {/* Opis główny */}
+        <div className="prose prose-lg max-w-none mb-12">
+          <p>
+            Brazylia to kraj kontrastów, gdzie nowoczesne metropolie sąsiadują z dziewiczą przyrodą Amazonii, a plaże Copacabana i Ipanema przyciągają turystów z całego świata. To dom samby, piłki nożnej, karnawału i niezwykle gościnnych ludzi.
+          </p>
+          <p>
+            Nasza oferta wycieczek do Brazylii łączy w sobie zwiedzanie najbardziej fascynujących miast, eksplorację dzikiej przyrody i relaks na najpiękniejszych plażach Ameryki Południowej.
+          </p>
+        </div>
+        
+        {/* Główne atrakcje */}
+        <h2 className="text-2xl font-bold mb-6">Główne atrakcje</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="card bg-base-100 shadow-lg">
+            <div className="relative h-52">
+              <Image 
+                src="/images/destinations/brazil.jpg" 
+                alt="Rio de Janeiro" 
+                fill 
+                className="object-cover object-top" 
+              />
+            </div>
+            <div className="card-body">
+              <h3 className="card-title">Rio de Janeiro</h3>
+              <p>Miasto słynące z posągu Chrystusa Zbawiciela, Głowy Cukru i wspaniałych plaż. Miejsce, gdzie brazylijskie życie tętni najsilniej, szczególnie podczas karnawału.</p>
+            </div>
+          </div>
+          
+          <div className="card bg-base-100 shadow-lg">
+            <div className="relative h-52">
+              <Image 
+                src="/images/jungle.png" 
+                alt="Amazonia - Las deszczowy" 
+                fill 
+                className="object-cover object-center" 
+              />
+            </div>
+            <div className="card-body">
+              <h3 className="card-title">Amazonia</h3>
+              <p>Największy tropikalny las deszczowy na świecie, dom dla niezliczonej ilości gatunków roślin i zwierząt. Niezapomniana przygoda dla każdego miłośnika przyrody.</p>
+            </div>
+          </div>
+          
+          <div className="card bg-base-100 shadow-lg">
+            <div className="relative h-52">
+              <Image 
+                src="/images/destinations/brazil.jpg" 
+                alt="Wodospady Iguazu" 
+                fill 
+                className="object-cover object-bottom" 
+              />
+            </div>
+            <div className="card-body">
+              <h3 className="card-title">Wodospady Iguazu</h3>
+              <p>Jeden z najwspanialszych systemów wodospadów na świecie, na granicy z Argentyną. 275 kaskad rozciągniętych na długości 2,7 km to spektakl natury, którego nie można przegapić.</p>
+            </div>
+          </div>
+          
+          <div className="card bg-base-100 shadow-lg">
+            <div className="relative h-52">
+              <Image 
+                src="/images/destinations/brazil.jpg" 
+                alt="Salvador - historyczne miasto" 
+                fill 
+                className="object-cover object-left" 
+              />
+            </div>
+            <div className="card-body">
+              <h3 className="card-title">Salvador</h3>
+              <p>Historyczne miasto z kolorową architekturą kolonialną, gdzie afrykańskie i portugalskie wpływy tworzą wyjątkową mieszankę kulturową. Stolica brazylijskiej muzyki i tańca.</p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Propozycje wycieczek */}
+        <h2 className="text-2xl font-bold mb-6">Nasze propozycje wycieczek</h2>
+        <div className="space-y-6 mb-12">
+          <div className="p-6 bg-base-100 shadow-lg rounded-lg">
+            <h3 className="font-bold text-xl mb-2">Brazylijska Przygoda - 10 dni</h3>
+            <p>Kompleksowa wycieczka obejmująca Rio de Janeiro, Sao Paulo oraz wypoczynek na plażach północy.</p>
+          </div>
+          
+          <div className="p-6 bg-base-100 shadow-lg rounded-lg">
+            <h3 className="font-bold text-xl mb-2">Amazońska Ekspedycja - 12 dni</h3>
+            <p>Wyprawa dla poszukiwaczy przygód, łącząca pobyt w dżungli z rejsem po Amazonce i poznawaniem kultury plemion.</p>
+          </div>
+          
+          <div className="p-6 bg-base-100 shadow-lg rounded-lg">
+            <h3 className="font-bold text-xl mb-2">Brazylia i Argentyna - 14 dni</h3>
+            <p>Fascynująca podróż przez dwa kraje, od Rio de Janeiro po Buenos Aires, z wizytą przy wodospadach Iguazu.</p>
+          </div>
+        </div>
+        
+        {/* Call to action */}
+        <div className="bg-primary text-white p-8 rounded-xl text-center">
+          <h2 className="text-2xl font-bold mb-4">Gotowy odkryć Brazylię?</h2>
+          <p className="mb-6">Skontaktuj się z nami, aby omówić szczegóły wycieczki dopasowanej do Twoich oczekiwań!</p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link href="/auth?destination=create-trip" className="btn btn-lg btn-outline border-white text-white hover:bg-white hover:text-primary">
+              Zaplanuj swoją wycieczkę już dzisiaj
+            </Link>
+            <Link href="/contact" className="btn btn-sm bg-white text-primary hover:bg-gray-100">
+              Kontakt z doradcą
+            </Link>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

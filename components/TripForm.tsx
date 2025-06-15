@@ -66,8 +66,8 @@ export default function TripForm() {
       setEndDate('');
       setContinent('');
       setTimeout(() => {
-        router.push('/dashboard');
-      }, 2000);
+        router.push('/dashboard?tripCreated=true');
+      }, 3000);
     } catch (err: any) {
       console.error('Błąd:', err);
       setError(err?.message || 'Wystąpił błąd podczas zapisywania podróży');
@@ -216,7 +216,19 @@ export default function TripForm() {
         {loading ? 'Wysyłanie...' : 'Wyślij zgłoszenie'}
       </button>
       
-      {success && <div className="alert alert-success">Podróż zgłoszona! Za chwilę zostaniesz przekierowany.</div>}
+      {success && (
+        <div className="alert alert-success shadow-lg">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h3 className="font-bold">Zgłoszenie przyjęte!</h3>
+              <p className="text-sm">Twoja podróż jest w trakcie planowania. Nasz doradca skontaktuje się z Tobą wkrótce z indywidualną ofertą.</p>
+            </div>
+          </div>
+        </div>
+      )}
       {error && <div className="alert alert-error">{error}</div>}
     </form>
   );
